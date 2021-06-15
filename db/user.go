@@ -25,6 +25,6 @@ func UserRegister(mod model.User) (bool, error) {
 }
 
 // 修改密码
-func UserModifyPwd(mod model.User, pwd string) (boor, error) {
-
+func UserModifyPwd(mod model.User, pwd string) (bool, error) {
+	return false, nil
 }
