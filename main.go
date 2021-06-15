@@ -1,5 +1,7 @@
 package main
 
-func main() {
+import "ticket/router"
 
+func main() {
+	router.Run()
 }
