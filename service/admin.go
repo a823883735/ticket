@@ -44,4 +44,5 @@ func AdminLogin(ctx *gin.Context) {
 		"code": 200,
 		"data": ok,
 	})
+	ctx.JSON(OperationResult(db.AdminLogin(admin)))
 }

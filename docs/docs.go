@@ -19,6 +19,7 @@ var doc = `{
         "description": "{{.Description}}",
         "title": "{{.Title}}",
         "contact": {},
+        "license": {},
         "version": "{{.Version}}"
     },
     "host": "{{.Host}}",
@@ -63,9 +64,195 @@ var doc = `{
                 }
             }
         },
+        "/v1/order/addOrder": {
+            "post": {
+                "description": "add ticket order",
+                "consumes": [
+                    "multipart/form-data"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "订单"
+                ],
+                "summary": "新增订单",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "用户名",
+                        "name": "userName",
+                        "in": "formData",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "密码",
+                        "name": "password",
+                        "in": "formData",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "ok",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/order/myOrderList": {
+            "get": {
+                "description": "get admin login",
+                "consumes": [
+                    "multipart/form-data"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "订单"
+                ],
+                "summary": "我的订单列表",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "页码",
+                        "name": "index",
+                        "in": "query",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "页长",
+                        "name": "size",
+                        "in": "query",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "ok",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/order/orderList": {
+            "get": {
+                "description": "get admin login",
+                "consumes": [
+                    "multipart/form-data"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "订单"
+                ],
+                "summary": "所有订单列表",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "页码",
+                        "name": "index",
+                        "in": "query",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "页长",
+                        "name": "size",
+                        "in": "query",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "ok",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/ticket/addTicket": {
+            "post": {
+                "description": "add ticket",
+                "consumes": [
+                    "multipart/form-data"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "门票"
+                ],
+                "summary": "新增门票",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "门票名称",
+                        "name": "title",
+                        "in": "formData",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "门票详情",
+                        "name": "details",
+                        "in": "formData",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "门票价格",
+                        "name": "price",
+                        "in": "formData",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "ok",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/ticket/ticketList": {
+            "get": {
+                "description": "get ticket list",
+                "consumes": [
+                    "multipart/form-data"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "门票"
+                ],
+                "summary": "门票列表",
+                "responses": {
+                    "200": {
+                        "description": "ok",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
         "/v1/user/login": {
             "post": {
-                "description": "get admin login",
+                "description": "user login",
                 "consumes": [
                     "multipart/form-data"
                 ],
@@ -76,6 +263,91 @@ var doc = `{
                     "用户"
                 ],
                 "summary": "用户登录",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "用户名",
+                        "name": "userName",
+                        "in": "formData",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "密码",
+                        "name": "password",
+                        "in": "formData",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "ok",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/user/newPwd": {
+            "post": {
+                "description": "modify user password",
+                "consumes": [
+                    "multipart/form-data"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "用户"
+                ],
+                "summary": "用户修改密码",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "用户名",
+                        "name": "userName",
+                        "in": "formData",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "旧密码",
+                        "name": "oldPwd",
+                        "in": "formData",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "新密码",
+                        "name": "newPwd",
+                        "in": "formData",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "ok",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/user/register": {
+            "post": {
+                "description": "user register",
+                "consumes": [
+                    "multipart/form-data"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "用户"
+                ],
+                "summary": "用户注册",
                 "parameters": [
                     {
                         "type": "string",

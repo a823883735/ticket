@@ -1,5 +1,6 @@
 info:
   contact: {}
+  license: {}
 paths:
   /v1/admin/login:
     post:
@@ -27,11 +28,135 @@ paths:
       summary: 管理员登录
       tags:
       - 管理员
+  /v1/order/addOrder:
+    post:
+      consumes:
+      - multipart/form-data
+      description: add ticket order
+      parameters:
+      - description: 用户名
+        in: formData
+        name: userName
+        required: true
+        type: string
+      - description: 密码
+        in: formData
+        name: password
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: ok
+          schema:
+            type: string
+      summary: 新增订单
+      tags:
+      - 订单
+  /v1/order/myOrderList:
+    get:
+      consumes:
+      - multipart/form-data
+      description: get admin login
+      parameters:
+      - description: 页码
+        in: query
+        name: index
+        required: true
+        type: string
+      - description: 页长
+        in: query
+        name: size
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: ok
+          schema:
+            type: string
+      summary: 我的订单列表
+      tags:
+      - 订单
+  /v1/order/orderList:
+    get:
+      consumes:
+      - multipart/form-data
+      description: get admin login
+      parameters:
+      - description: 页码
+        in: query
+        name: index
+        required: true
+        type: string
+      - description: 页长
+        in: query
+        name: size
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: ok
+          schema:
+            type: string
+      summary: 所有订单列表
+      tags:
+      - 订单
+  /v1/ticket/addTicket:
+    post:
+      consumes:
+      - multipart/form-data
+      description: add ticket
+      parameters:
+      - description: 门票名称
+        in: formData
+        name: title
+        required: true
+        type: string
+      - description: 门票详情
+        in: formData
+        name: details
+        required: true
+        type: string
+      - description: 门票价格
+        in: formData
+        name: price
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: ok
+          schema:
+            type: string
+      summary: 新增门票
+      tags:
+      - 门票
+  /v1/ticket/ticketList:
+    get:
+      consumes:
+      - multipart/form-data
+      description: get ticket list
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: ok
+          schema:
+            type: string
+      summary: 门票列表
+      tags:
+      - 门票
   /v1/user/login:
     post:
       consumes:
       - multipart/form-data
-      description: get admin login
+      description: user login
       parameters:
       - description: 用户名
         in: formData
@@ -51,6 +176,63 @@ paths:
           schema:
             type: string
       summary: 用户登录
+      tags:
+      - 用户
+  /v1/user/newPwd:
+    post:
+      consumes:
+      - multipart/form-data
+      description: modify user password
+      parameters:
+      - description: 用户名
+        in: formData
+        name: userName
+        required: true
+        type: string
+      - description: 旧密码
+        in: formData
+        name: oldPwd
+        required: true
+        type: string
+      - description: 新密码
+        in: formData
+        name: newPwd
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: ok
+          schema:
+            type: string
+      summary: 用户修改密码
+      tags:
+      - 用户
+  /v1/user/register:
+    post:
+      consumes:
+      - multipart/form-data
+      description: user register
+      parameters:
+      - description: 用户名
+        in: formData
+        name: userName
+        required: true
+        type: string
+      - description: 密码
+        in: formData
+        name: password
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: ok
+          schema:
+            type: string
+      summary: 用户注册
       tags:
       - 用户
 swagger: "2.0"
