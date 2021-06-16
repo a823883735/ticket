@@ -9,6 +9,6 @@ func RegisterUserRouter() {
 	{
 		adminRouter.POST("login", service.UserLogin)
 		adminRouter.POST("register", service.UserRegister)
-		adminRouter.POST("newPwd", service.UserModifyPwd)
+		adminRouter.PUT("newPwd", service.UserModifyPwd)
 	}
 }

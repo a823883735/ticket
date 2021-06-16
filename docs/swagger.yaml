@@ -1,6 +1,5 @@
 info:
   contact: {}
-  license: {}
 paths:
   /v1/admin/login:
     post:
@@ -36,12 +35,17 @@ paths:
       parameters:
       - description: 用户名
         in: formData
-        name: userName
+        name: uid
         required: true
         type: string
-      - description: 密码
+      - description: 门票id
         in: formData
-        name: password
+        name: tid
+        required: true
+        type: string
+      - description: 门票数量
+        in: formData
+        name: num
         required: true
         type: string
       produces:
@@ -54,20 +58,51 @@ paths:
       summary: 新增订单
       tags:
       - 订单
+  /v1/order/deleteOrderById:
+    delete:
+      consumes:
+      - multipart/form-data
+      description: delete my order
+      parameters:
+      - description: 用户id
+        in: query
+        name: u_id
+        required: true
+        type: string
+      - description: 订单id
+        in: query
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: ok
+          schema:
+            type: string
+      summary: 删除订单
+      tags:
+      - 订单
   /v1/order/myOrderList:
     get:
       consumes:
       - multipart/form-data
-      description: get admin login
+      description: get my order list
       parameters:
       - description: 页码
         in: query
         name: index
         required: true
-        type: string
+        type: integer
       - description: 页长
         in: query
         name: size
+        required: true
+        type: integer
+      - description: 用户id
+        in: query
+        name: uid
         required: true
         type: string
       produces:
@@ -84,7 +119,7 @@ paths:
     get:
       consumes:
       - multipart/form-data
-      description: get admin login
+      description: get all order
       parameters:
       - description: 页码
         in: query
@@ -137,6 +172,27 @@ paths:
       summary: 新增门票
       tags:
       - 门票
+  /v1/ticket/delTicketList:
+    delete:
+      consumes:
+      - multipart/form-data
+      description: get ticket list
+      parameters:
+      - description: 门票id
+        in: query
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: ok
+          schema:
+            type: string
+      summary: 删除门票类型
+      tags:
+      - 门票
   /v1/ticket/ticketList:
     get:
       consumes:
@@ -179,7 +235,7 @@ paths:
       tags:
       - 用户
   /v1/user/newPwd:
-    post:
+    put:
       consumes:
       - multipart/form-data
       description: modify user password

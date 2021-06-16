@@ -11,6 +11,8 @@ func Run() {
 	RegisterAdminRouter()
 	RegisterUserRouter()
 	RegisterSwagRouter()
+	RegisterTicketRouter()
+	RegisterOrderRouter()
 	port := conf.Conf().Section("server").Key("port").Value()
 	if port == "" {
 		port = "80"

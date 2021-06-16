@@ -26,12 +26,9 @@ func UserRegister(mod model.User) (bool, error) {
 
 // 修改密码
 func UserModifyPwd(mod model.User, oldPwd string) (bool, error) {
-	rows, err := mysqlEngine.Where("id=?", mod.Id).And("pwd=?", oldPwd).Update(mod)
+	_, err := mysqlEngine.Cols("pwd").Where("id=?", mod.Id).And("pwd=?", oldPwd).Update(mod)
 	if err != nil {
 		return false, err
 	}
-	if rows > 0 {
-		return true, nil
-	}
-	return false, nil
+	return true, nil
 }

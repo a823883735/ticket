@@ -2,7 +2,6 @@ package service
 
 import (
 	"github.com/gin-gonic/gin"
-	"net/http"
 	"strconv"
 	"ticket/db"
 	"ticket/model"
@@ -22,15 +21,12 @@ import (
 // @contact.email 7947@qq.com
 func AddTicket(ctx *gin.Context) {
 	var mod = model.Ticket{
-		Title: ctx.PostForm("tile"),
+		Title: ctx.PostForm("title"),
 		Details: ctx.PostForm("details"),
 	}
 	var price, err = strconv.ParseFloat(ctx.PostForm("price"), 10)
 	if err != nil {
-		ctx.JSON(http.StatusOK, gin.H{
-			"code": 400,
-			"msg": "数据有误",
-		})
+		ctx.JSON(ReturnDataFormatErr())
 		return
 	}
 	mod.Price = float32(price)
@@ -47,5 +43,24 @@ func AddTicket(ctx *gin.Context) {
 // @contact.name 7947
 // @contact.email 7947@qq.com
 func TicketList(ctx *gin.Context) {
+	ctx.JSON(ReturnDataSet(db.GetTicket()))
+}
 
+// @Summary 删除门票类型
+// @Tags 门票
+// @Description get ticket list
+// @Accept  multipart/form-data
+// @Produce application/json
+// @Param   id  query    int     true        "门票id"
+// @Success 200 {string} string	"ok"
+// @Router /v1/ticket/delTicketList [delete]
+// @contact.name 7947
+// @contact.email 7947@qq.com
+func DelTicket(ctx *gin.Context) {
+	var ticketId, err = strconv.ParseInt(ctx.Query("id"), 10, 32)
+	if err != nil {
+		ctx.JSON(ReturnDataFormatErr())
+		return
+	}
+	ctx.JSON(OperationResult(db.DeleteTicket(int(ticketId))))
 }

@@ -2,8 +2,6 @@ package service
 
 import (
 	"github.com/gin-gonic/gin"
-	"log"
-	"net/http"
 	"ticket/db"
 	"ticket/model"
 )
@@ -20,31 +18,11 @@ import (
 // @contact.name 7947
 // @contact.email 7947@qq.com
 func UserLogin(ctx *gin.Context) {
-	var admin model.Admin = model.Admin{
+	var mod model.Admin = model.Admin{
 		Id: ctx.PostForm("userName"),
 		Pwd: ctx.PostForm("password"),
 	}
-	ok, err := db.AdminLogin(admin)
-	if err != nil {
-		log.Println("admin login error: ", err)
-		ctx.JSON(http.StatusOK, gin.H{
-			"code": 500,
-			"msg": "服务器异常",
-		})
-		return
-	}
-	if !ok {
-		ctx.JSON(http.StatusOK, gin.H{
-			"code": 400,
-			"data": false,
-		})
-		return
-	}
-	ctx.JSON(http.StatusOK, gin.H{
-		"code": 200,
-		"data": ok,
-	})
-	ctx.JSON(OperationResult(db.AdminLogin(admin)))
+	ctx.JSON(OperationResult(db.AdminLogin(mod)))
 }
 
 // @Summary 用户注册
@@ -75,7 +53,7 @@ func UserRegister(ctx *gin.Context) {
 // @Param   oldPwd  formData    string     true        "旧密码"
 // @Param   newPwd  formData    string     true        "新密码"
 // @Success 200 {string} string	"ok"
-// @Router /v1/user/newPwd [post]
+// @Router /v1/user/newPwd [put]
 // @contact.name 7947
 // @contact.email 7947@qq.com
 func UserModifyPwd(ctx *gin.Context) {

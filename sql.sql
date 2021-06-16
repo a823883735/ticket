@@ -58,12 +58,15 @@ CREATE TABLE `order` (
   `id` int NOT NULL AUTO_INCREMENT COMMENT '主键',
   `t_id` int NOT NULL,
   `u_id` varchar(20) NOT NULL,
+  `isDel` bit(1) DEFAULT b'0',
+  `date` date NOT NULL,
+  `t_num` int DEFAULT '1',
   PRIMARY KEY (`id`),
   KEY `t_id` (`t_id`),
   KEY `u_id` (`u_id`),
   CONSTRAINT `order_ibfk_1` FOREIGN KEY (`t_id`) REFERENCES `ticket` (`id`),
   CONSTRAINT `order_ibfk_2` FOREIGN KEY (`u_id`) REFERENCES `user` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -72,6 +75,7 @@ CREATE TABLE `order` (
 
 LOCK TABLES `order` WRITE;
 /*!40000 ALTER TABLE `order` DISABLE KEYS */;
+INSERT INTO `order` VALUES (1,1,'zhangsan',_binary '\0','2021-06-16',1),(2,1,'lisi',_binary '\0','2021-06-16',2);
 /*!40000 ALTER TABLE `order` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -87,8 +91,9 @@ CREATE TABLE `ticket` (
   `title` varchar(20) NOT NULL COMMENT '标题',
   `details` text COMMENT '描述',
   `price` decimal(10,2) DEFAULT '0.00' COMMENT '价格',
+  `isDel` bit(1) DEFAULT b'0',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='票';
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='票';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -97,6 +102,7 @@ CREATE TABLE `ticket` (
 
 LOCK TABLES `ticket` WRITE;
 /*!40000 ALTER TABLE `ticket` DISABLE KEYS */;
+INSERT INTO `ticket` VALUES (1,'门票1','门票详情1',10.00,_binary '\0');
 /*!40000 ALTER TABLE `ticket` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -120,6 +126,7 @@ CREATE TABLE `user` (
 
 LOCK TABLES `user` WRITE;
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
+INSERT INTO `user` VALUES ('lisi','123456'),('zhangsan','123456');
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -132,4 +139,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2021-06-15 17:53:43
+-- Dump completed on 2021-06-16 15:55:59

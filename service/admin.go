@@ -2,8 +2,6 @@ package service
 
 import (
 	"github.com/gin-gonic/gin"
-	"log"
-	"net/http"
 	"ticket/db"
 	"ticket/model"
 )
@@ -24,25 +22,5 @@ func AdminLogin(ctx *gin.Context) {
 		Id: ctx.PostForm("userName"),
 		Pwd: ctx.PostForm("password"),
 	}
-	ok, err := db.AdminLogin(admin)
-	if err != nil {
-		log.Println("admin login error: ", err)
-		ctx.JSON(http.StatusOK, gin.H{
-			"code": 500,
-			"msg": "服务器异常",
-		})
-		return
-	}
-	if !ok {
-		ctx.JSON(http.StatusOK, gin.H{
-			"code": 400,
-			"data": false,
-		})
-		return
-	}
-	ctx.JSON(http.StatusOK, gin.H{
-		"code": 200,
-		"data": ok,
-	})
 	ctx.JSON(OperationResult(db.AdminLogin(admin)))
 }

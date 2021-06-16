@@ -19,7 +19,6 @@ var doc = `{
         "description": "{{.Description}}",
         "title": "{{.Title}}",
         "contact": {},
-        "license": {},
         "version": "{{.Version}}"
     },
     "host": "{{.Host}}",
@@ -81,15 +80,61 @@ var doc = `{
                     {
                         "type": "string",
                         "description": "用户名",
-                        "name": "userName",
+                        "name": "uid",
                         "in": "formData",
                         "required": true
                     },
                     {
                         "type": "string",
-                        "description": "密码",
-                        "name": "password",
+                        "description": "门票id",
+                        "name": "tid",
                         "in": "formData",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "门票数量",
+                        "name": "num",
+                        "in": "formData",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "ok",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/order/deleteOrderById": {
+            "delete": {
+                "description": "delete my order",
+                "consumes": [
+                    "multipart/form-data"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "订单"
+                ],
+                "summary": "删除订单",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "用户id",
+                        "name": "u_id",
+                        "in": "query",
+                        "required": true
+                    },
+                    {
+                        "type": "integer",
+                        "description": "订单id",
+                        "name": "id",
+                        "in": "query",
                         "required": true
                     }
                 ],
@@ -105,7 +150,7 @@ var doc = `{
         },
         "/v1/order/myOrderList": {
             "get": {
-                "description": "get admin login",
+                "description": "get my order list",
                 "consumes": [
                     "multipart/form-data"
                 ],
@@ -118,16 +163,23 @@ var doc = `{
                 "summary": "我的订单列表",
                 "parameters": [
                     {
-                        "type": "string",
+                        "type": "integer",
                         "description": "页码",
                         "name": "index",
                         "in": "query",
                         "required": true
                     },
                     {
-                        "type": "string",
+                        "type": "integer",
                         "description": "页长",
                         "name": "size",
+                        "in": "query",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "用户id",
+                        "name": "uid",
                         "in": "query",
                         "required": true
                     }
@@ -144,7 +196,7 @@ var doc = `{
         },
         "/v1/order/orderList": {
             "get": {
-                "description": "get admin login",
+                "description": "get all order",
                 "consumes": [
                     "multipart/form-data"
                 ],
@@ -227,6 +279,38 @@ var doc = `{
                 }
             }
         },
+        "/v1/ticket/delTicketList": {
+            "delete": {
+                "description": "get ticket list",
+                "consumes": [
+                    "multipart/form-data"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "门票"
+                ],
+                "summary": "删除门票类型",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "门票id",
+                        "name": "id",
+                        "in": "query",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "ok",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
         "/v1/ticket/ticketList": {
             "get": {
                 "description": "get ticket list",
@@ -290,7 +374,7 @@ var doc = `{
             }
         },
         "/v1/user/newPwd": {
-            "post": {
+            "put": {
                 "description": "modify user password",
                 "consumes": [
                     "multipart/form-data"

@@ -7,5 +7,6 @@ func RegisterTicketRouter() {
 	{
 		ticketRouter.POST("/addTicket", service.AddTicket)
 		ticketRouter.GET("/ticketList", service.TicketList)
+		ticketRouter.DELETE("/delTicketList", service.DelTicket)
 	}
 }
