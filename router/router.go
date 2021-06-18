@@ -9,7 +9,7 @@ import (
 var ginEngine *gin.Engine = gin.Default()
 
 func Run() {
-	ginEngine.Use(cors())
+	ginEngine.Use(Cors())
 	RegisterAdminRouter()
 	RegisterUserRouter()
 	RegisterSwagRouter()
@@ -26,9 +26,8 @@ func Server() *gin.Engine {
 	return ginEngine
 }
 
-//	跨域处理
-//	Allow cross-domacin processing.
-func cors() gin.HandlerFunc {
+//	Allow cross-domain processing.
+func Cors() gin.HandlerFunc {
 	return func(ctx *gin.Context) {
 		method := ctx.Request.Method
 
