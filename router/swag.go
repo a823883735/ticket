@@ -9,7 +9,7 @@ import (
 func RegisterSwagRouter() {
 	docs.SwaggerInfo.Version = "v1.0.0"
 	docs.SwaggerInfo.Title = "在线购票"
-	docs.SwaggerInfo.Host = "localhost:10000"
+	docs.SwaggerInfo.Host = "106.13.237.16:10000"
 	docs.SwaggerInfo.BasePath = ""
 
 	// 文档界面访问URL
