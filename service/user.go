@@ -18,11 +18,11 @@ import (
 // @contact.name 7947
 // @contact.email 7947@qq.com
 func UserLogin(ctx *gin.Context) {
-	var mod model.Admin = model.Admin{
+	var mod model.User = model.User{
 		Id: ctx.PostForm("userName"),
 		Pwd: ctx.PostForm("password"),
 	}
-	ctx.JSON(OperationResult(db.AdminLogin(mod)))
+	ctx.JSON(OperationResult(db.UserLogin(mod)))
 }
 
 // @Summary 用户注册

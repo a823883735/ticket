@@ -1,0 +1,76 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+body{
+    width: 100%;
+}
+.bg{
+    width: 100%;
+    opacity: 0.8;
+    position: absolute;
+    z-index: -1;
+    top: 0;
+}
+
+.loginbox{
+    position: absolute;
+    z-index: 2;
+    top: 33%;
+    padding: 50px 100px;
+    width: 100%;
+    box-sizing: border-box;
+}
+.login{
+    width: 400px;
+    margin: 0 auto;
+    padding-right: 50px;
+}
+.el-form-item__label{
+    color: black;
+}
+header{
+    width: 90%;
+    margin: 0 auto;
+    padding: 50px 0px;
+    box-sizing: border-box;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+header ul{
+    display: flex;
+    justify-content: space-between;
+    width: 15%;
+}
+header ul li{
+    list-style-type: none;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+}
+.con{
+    width: 90%;
+    margin: 0 auto;
+    background: white;
+    border-radius: 10px;
+    opacity: 0.9;
+    padding: 45px 50px;
+    box-sizing: border-box;
+}
+
+  .demo-table-expand {
+    font-size: 0;
+  }
+  .demo-table-expand label {
+    width: 90px;
+    color: #99a9bf;
+  }
+  .demo-table-expand .el-form-item {
+    margin-right: 0;
+    margin-bottom: 0;
+    width: 50%;
+  }
+  .v-modal{
+      display: none;
+  }

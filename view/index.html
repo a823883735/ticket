@@ -1,63 +1,88 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <title>曲江海洋馆</title>
-	<link rel="icon" href="static/image/icon.png" sizes="32x32"/>
-	<link rel="stylesheet" type="text/css" href="static/css/common.css"/>
-	<style type="text/css">
-		#app{min-width: 1200px;}
-			/* #app-content{width: 1200px;margin: auto;} */
-			#top{
-				background: url(static/image/bg-top.jpg) no-repeat top center;
-				height: auto;
-				overflow: hidden;
-				padding: 30px 0px;
-			}
-				#top-content{
-					width: 1200px;
-					margin: auto;
-				}
-				/* #title{
-					width: 1200px;
-					margin: auto;
-					margin: 30px;
-					float: left;
-				}
-				#nav{
-					position: relative;
-					margin-left: 300px;
-					width: 700px;
-				} */
-			#bottom{
-				background-image: url(static/image/bg-bottom.jpg) no-repeat top center;
-				width: 100%;
-				height: auto;
-			}
-	</style>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>曲江海洋极地公园</title>
+  <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+  <link rel="stylesheet" href="static/element-icons.woff" rel="stylesheet"/>
+  <link rel="stylesheet" href="css/index.css">
 </head>
+
 <body>
-	<div id="app">
-		<div id="app-content">
-			<div id="top">
-				<div id="top-content">
-					<div id="title">
-						<a href="#">
-							<img src="static/image/logo.png" >
-						</a>
-					</div>
-					<div id="nav">
-						<div id="navBar">
-							<ul>
-								<li>购票</li>
-								<li>订单</li>
-								<li>登录</li>
-							</ul>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
+  <div id="app">
+    <img src="img/bg-top.jpg" class="bg" alt="">
+    <header>
+      <img src="img/logo.png" alt="">
+      <el-button type="primary">退出</el-button>
+    </header>
+    <div class="con">
+      <template>
+        <el-tabs v-model="activeName" @tab-click="handleClick">
+          <el-tab-pane label="购票" name="first">
+            <template>
+              <el-table :data="tableData" style="width: 100%">
+                <el-table-column type="expand">
+                  <template slot-scope="props">
+                    <el-form label-position="left" inline class="demo-table-expand">
+                      <el-form-item label="标题">
+                        <span>{{ props.row.title }}</span>
+                      </el-form-item>
+                      <el-form-item label="时间">
+                        <span>{{ props.row.time }}</span>
+                      </el-form-item>
+                      <el-form-item label="价格">
+                        <span>{{ props.row.price }}</span>
+                      </el-form-item>
+                      
+                    </el-form>
+                  </template>
+                </el-table-column>
+                <el-table-column label="标题" prop="title">
+                </el-table-column>
+                <el-table-column label="时间" prop="time">
+                </el-table-column>
+                <el-table-column label="价格" prop="price">
+                </el-table-column>
+                <el-table-column label="操作">
+                  <template slot-scope="scope">
+                    <el-button
+                      size="mini"
+                      @click="dialogFormVisible = true"
+                      @click="handleEdit(scope.$index, scope.row)">购买</el-button>
+                  </template>
+                </el-table-column>
+              </el-table>
+            </template>
+          </el-tab-pane>
+          <el-tab-pane label="订单" name="second">订单</el-tab-pane>
+        </el-tabs>
+      </template>
+      <el-dialog title="收货地址" :visible.sync="dialogFormVisible">
+        <el-form :model="form">
+          <el-table-column property="date" label="日期" width="150"></el-table-column>
+          <el-form-item label="活动名称" :label-width="formLabelWidth">
+            <el-input v-model="form.name" autocomplete="off"></el-input>
+          </el-form-item>
+          <el-form-item label="活动区域" :label-width="formLabelWidth">
+            <el-select v-model="form.region" placeholder="请选择活动区域">
+              <el-option label="区域一" value="shanghai"></el-option>
+              <el-option label="区域二" value="beijing"></el-option>
+            </el-select>
+          </el-form-item>
+        </el-form>
+    </div>
+  </div>
+
+
 </body>
+
 </html>
+<script src="static/js/vue.js"></script>
+<!-- import JavaScript -->
+<script src="static/js/element-ui.js"></script>
+<script src="static/js/axios.min.js"></script>
+<script src="static/js/qs.min.js"></script>
+<script src="js/index.js"></script>
