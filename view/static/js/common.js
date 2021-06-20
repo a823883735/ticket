@@ -1,2 +1,2 @@
-var baseUrl = "http://106.13.237.16:10000";
+var baseUrl = "http://127.0.0.1:10000";
 var id = localStorage.getItem("id");

@@ -1,6 +1,8 @@
 package main
 
-import "ticket/router"
+import (
+	"ticket/router"
+)
 
 func main() {
 	router.Run()

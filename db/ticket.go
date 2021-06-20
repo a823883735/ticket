@@ -4,7 +4,7 @@ import "ticket/model"
 
 // 新增票
 func AddTicket(mod model.Ticket) (bool, error) {
-	_, err := mysqlEngine.Insert(&mod)
+	_, err := mysqlEngine.Insert(mod)
 	if err != nil {
 		return false, err
 	}
@@ -26,6 +26,6 @@ func DeleteTicket(modId int) (bool, error) {
 // 查看票
 func GetTicket() ([]model.Ticket, error) {
 	var mod []model.Ticket
-	err := mysqlEngine.Where("isDel=0").Find(&mod)
+	err := mysqlEngine.Where("isDel=0").Desc("id").Find(&mod)
 	return mod, err
 }

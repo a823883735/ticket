@@ -21,10 +21,10 @@ func AddOrder(mod model.Order) (bool, error) {
 var (
 	allSql = "select `order`.id id, ticket.title title, ticket.details details, `order`.t_num num, ticket.price price, order.u_id u_id, date " +
 		"from `order`, ticket " +
-		"where `order`.t_id=ticket.id "
+		"where `order`.t_id=ticket.id order by id desc "
 	mySql = "select `order`.id id, ticket.title title, ticket.details details, `order`.t_num num, ticket.price price, date " +
 		"from `order`, ticket " +
-		"where `order`.t_id=ticket.id and `order`.isDel=0 and `order`.u_id=? "
+		"where `order`.t_id=ticket.id and `order`.isDel=0 and `order`.u_id=? order by id desc "
 )
 
 // 查看所有订单, 若uid不为空，则查找我的所有订单
