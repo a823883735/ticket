@@ -16,48 +16,87 @@
     <img src="img/bg-top.jpg" class="bg" alt="">
     <header>
       <img src="img/logo.png" alt="">
-      <el-button type="primary">退出</el-button>
+      <el-button type="primary" @click="handleExit">退出</el-button>
     </header>
     <div class="con">
       <template>
         <el-tabs v-model="activeName" @tab-click="handleClick">
           <el-tab-pane label="购票" name="first">
             <template>
-              <el-table :data="tableData" style="width: 100%">
+              <el-table :data="ticketList" max-height="250" style="width: 100%">
                 <el-table-column type="expand">
                   <template slot-scope="props">
                     <el-form label-position="left" inline class="demo-table-expand">
-                      <el-form-item label="标题">
-                        <span>{{ props.row.title }}</span>
+                      <el-form-item label="活动安排">
+                        <span>{{ props.row.details }}</span>
                       </el-form-item>
-                      <el-form-item label="时间">
-                        <span>{{ props.row.time }}</span>
+                      <!-- <el-form-item label="时间">
+                        <span>{{ props.row.date }}</span>
                       </el-form-item>
                       <el-form-item label="价格">
                         <span>{{ props.row.price }}</span>
                       </el-form-item>
-                      
-                    </el-form>
+                    </el-form> -->
                   </template>
                 </el-table-column>
-                <el-table-column label="标题" prop="title">
-                </el-table-column>
-                <el-table-column label="时间" prop="time">
-                </el-table-column>
-                <el-table-column label="价格" prop="price">
-                </el-table-column>
+                <el-table-column label="门票类型" prop="title"></el-table-column>
+                <!-- <el-table-column label="时间" prop="date">
+                </el-table-column> -->
+                <el-table-column label="价格" prop="price"></el-table-column>
+				<el-table-column label="数量">1</el-table-column>
                 <el-table-column label="操作">
                   <template slot-scope="scope">
                     <el-button
                       size="mini"
-                      @click="dialogFormVisible = true"
-                      @click="handleEdit(scope.$index, scope.row)">购买</el-button>
+                      @click="handleAddOrder(scope.$index, scope.row)">购买</el-button>
                   </template>
                 </el-table-column>
               </el-table>
             </template>
           </el-tab-pane>
-          <el-tab-pane label="订单" name="second">订单</el-tab-pane>
+          <el-tab-pane label="订单" name="second">
+			  <template>
+			    <el-table :data="myOrderList" max-height="250" style="width: 100%">
+			      <el-table-column type="expand">
+			        <template slot-scope="props">
+			          <el-form label-position="left" inline class="demo-table-expand">
+			            <el-form-item label="活动安排">
+			              <span>{{ props.row.details }}</span>
+			            </el-form-item>
+			            <!-- <el-form-item label="时间">
+			              <span>{{ props.row.date }}</span>
+			            </el-form-item>
+			            <el-form-item label="价格">
+			              <span>{{ props.row.price }}</span>
+			            </el-form-item>
+			          </el-form> -->
+			        </template>
+			      </el-table-column>
+			      <el-table-column label="门票类型" prop="title">
+			      </el-table-column>
+			      <el-table-column label="时间" prop="date">
+			      </el-table-column>
+			      <el-table-column label="价格" prop="price">
+			      </el-table-column>
+			      <el-table-column label="操作">
+			        <template slot-scope="scope">
+			            <!-- @click="dialogFormVisible = true" -->
+			          <el-button
+			            size="mini"
+						type="danger"
+			            @click="handleDeleteOrder(scope, scope.$index, scope.row)">删除</el-button>
+			        </template>
+			      </el-table-column>
+			    </el-table>
+				<el-pagination
+				  small
+				  layout="prev, pager, next"
+				  :current-page="index"
+				  @current-change="getOrderList"
+				  :total="total">
+				</el-pagination>
+			  </template>
+		  </el-tab-pane>
         </el-tabs>
       </template>
       <el-dialog title="收货地址" :visible.sync="dialogFormVisible">
@@ -85,4 +124,5 @@
 <script src="static/js/element-ui.js"></script>
 <script src="static/js/axios.min.js"></script>
 <script src="static/js/qs.min.js"></script>
+<script src="static/js/common.js"></script>
 <script src="js/index.js"></script>

@@ -33,7 +33,7 @@ func Cors() gin.HandlerFunc {
 
 		ctx.Header("Access-Control-Allow-Origin", "*")
 		ctx.Header("Access-Control-Allow-Headers", "Content-Type,AccessToken,X-CSRF-Token, Authorization, Token")
-		ctx.Header("Access-Control-Allow-Methods", "POST, GET, OPTIONS, PUT")
+		ctx.Header("Access-Control-Allow-Methods", "POST, GET, OPTIONS, PUT, DELETE")
 		ctx.Header("Access-Control-Expose-Headers", "Content-Length, Access-Control-Allow-Origin, Access-Control-Allow-Headers, Content-Type")
 		ctx.Header("Access-Control-Allow-Credentials", "true")
 

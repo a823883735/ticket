@@ -28,17 +28,20 @@ var (
 )
 
 // 查看所有订单, 若uid不为空，则查找我的所有订单
-func GetAllOrderList(index, size int, uid string) ([]model.OrderResponse, error) {
+func GetAllOrderList(index, size int, uid string) (int, []model.OrderResponse, error) {
 	var sql = "limit ?, ?"
 	var rows *xorm.Rows
 	var err error
+	var total int
 	if uid != "" {
-		rows, err = mysqlEngine.SQL( mySql + sql, uid, index-1, size).Rows(new(model.OrderResponse))
+		mysqlEngine.SQL("select count(*) total from `order` where isDel=0 and u_id=?", uid).Get(&total)
+		rows, err = mysqlEngine.SQL( mySql + sql, uid, (index - 1) * size, size).Rows(new(model.OrderResponse))
 	} else {
-		rows, err = mysqlEngine.SQL( allSql + sql, index-1, size).Rows(new(model.OrderResponse))
+		mysqlEngine.SQL("select count(*) total from `order` where isDel=0").Get(&total)
+		rows, err = mysqlEngine.SQL( allSql + sql, (index - 1) * size, size).Rows(new(model.OrderResponse))
 	}
 	if err != nil {
-		return nil, err
+		return total, nil, err
 	}
 	defer rows.Close()
 	var list []model.OrderResponse
@@ -46,15 +49,15 @@ func GetAllOrderList(index, size int, uid string) ([]model.OrderResponse, error)
 		var ticketResponse model.OrderResponse
 		err = rows.Scan(&ticketResponse)
 		if err != nil {
-			return nil, err
+			return total, nil, err
 		}
 		list = append(list, ticketResponse)
 	}
-	return list, err
+	return total, list, err
 }
 
 // 查看我的订单
-func GetMyOrderList(index, size int, uid string) ([]model.OrderResponse, error) {
+func GetMyOrderList(index, size int, uid string) (int, []model.OrderResponse, error) {
 	return GetAllOrderList(index, size, uid)
 }
 

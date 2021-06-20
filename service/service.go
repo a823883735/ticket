@@ -40,6 +40,25 @@ func ReturnDataSet(data interface{}, err error) (int, gin.H) {
 	}
 }
 
+// http返回分页数据
+func ReturnDataList(index, size, total int, data interface{}, err error) (int, gin.H) {
+	if err != nil {
+		return http.StatusOK, gin.H{
+			"code": 500,
+			"msg": "服务器异常",
+		}
+	}
+	return http.StatusOK, gin.H{
+		"code": 200,
+		"data": gin.H{
+			"index": index,
+			"size": size,
+			"total": total,
+			"list": data,
+		},
+	}
+}
+
 // http数据格式错误
 func ReturnDataFormatErr() (int, gin.H) {
 	return http.StatusOK, gin.H{

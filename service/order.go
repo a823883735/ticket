@@ -51,7 +51,8 @@ func AllOrderList(ctx *gin.Context) {
 	if err == nil {
 		var size, err = strconv.ParseInt(ctx.Query("size"), 10, 32)
 		if err == nil {
-			ctx.JSON(ReturnDataSet(db.GetAllOrderList(int(index), int(size), "")))
+			var total, data, err = db.GetMyOrderList(int(index), int(size), "")
+			ctx.JSON(ReturnDataList(int(index), int(size), total, data, err))
 			return
 		}
 	}
@@ -80,7 +81,8 @@ func MyOrderList(ctx *gin.Context) {
 	if err == nil {
 		var size, err = strconv.ParseInt(ctx.Query("size"), 10, 32)
 		if err == nil {
-			ctx.JSON(ReturnDataSet(db.GetMyOrderList(int(index), int(size), uid)))
+			var total, data, err = db.GetMyOrderList(int(index), int(size), uid)
+			ctx.JSON(ReturnDataList(int(index), int(size), total, data, err))
 			return
 		}
 	}

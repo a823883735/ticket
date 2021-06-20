@@ -1,7 +1,7 @@
 package model
 
 type Ticket struct {
-	Id string `xorm:"'id' not null pk autoincr comment('主键')" json:"phone"`
+	Id string `xorm:"'id' int not null pk autoincr comment('主键')" json:"id"`
 	Title string `xorm:"'title' varchar(20) not null comment('标题')" json:"title"`
 	Details string `xorm:"'details' text comment('描述')" json:"details"`
 	Price float32 `xorm:"'price' decimal(10,2) default 0.00 comment('价格')" json:"price"`
