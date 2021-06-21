@@ -28,31 +28,46 @@ new Vue({
 				callback();
 			}
 		};
-		var validatePass2 = (rule, value, callback) => {
-			if (value === '') {
-				callback(new Error('请再次输入密码'));
-			} else if (value !== this.ruleForm.pass) {
-				callback(new Error('两次输入密码不一致!'));
-			} else {
-				callback();
-			}
-		};
 		var validateUserName = (rule, value, callback) => {
 			if (value === '') {
-				callback(new Error('请输入账号'));
+				callback(new Error('请输入用户名'));
 			} else {
 				// if (this.ruleForm.userName !== '') {
 				//   this.$refs.ruleForm.validateField('userName');
 				// }
 				callback();
 			}
-		}
+		};
+		var validatePass1 = (rule, value, callback) => {
+			if (value === '') {
+				callback(new Error('请输入密码'));
+			} else {
+				// if (this.ruleForm.checkPass !== '') {
+				// 	this.$refs.releForm1.validateField('checkPass');
+				// }
+				callback();
+			}
+		};
+		var validatePass2 = (rule, value, callback) => {
+			if (value === '') {
+				callback(new Error('请再次输入密码'));
+			} else if (value !== this.ruleForm1.pass) {
+				callback(new Error('两次输入密码不一致!'));
+			} else {
+				callback();
+			}
+		};
 		return {
 			ruleForm: {
 				userName: '',
 				pass: '',
-				// checkPass: '',
+				checkPass: '',
 				// age: ''
+			},
+			ruleForm1: {
+				userName: '',
+				pass: '',
+				rRePass: '',
 			},
 			rules: {
 				userName: [{
@@ -63,13 +78,22 @@ new Vue({
 					validator: validatePass,
 					trigger: 'blur'
 				}],
-				// checkPass: [
-				//   { validator: validatePass2, trigger: 'blur' }
-				// ],
-				// age: [
-				//   { validator: checkAge, trigger: 'blur' }
-				// ]
-			}
+			},
+			form1Rule: {
+				userName: [{
+					validator: validateUserName,
+					trigger: 'blur'
+				}],
+				pass: [{
+					validator: validatePass1,
+					trigger: 'blur'
+				}],
+				rRePass: [{
+					validator: validatePass2,
+					trigger: 'blur'
+				}],
+			},
+			tabPosition: '1',
 		};
 	},
 	methods: {
@@ -88,21 +112,84 @@ new Vue({
 						var ctx = res.data;
 						if (ctx.code == 200) {
 							localStorage.setItem('id', that.ruleForm.userName);
-							alert("登录成功");
-							window.location.href = "index.html";
+							that.$alert('登录成功', '提示', {
+								confirmButtonText: '确定',
+								callback: action => {
+									window.location.href = "index.html";
+									// that.$message({
+									//   type: 'info',
+									//   message: `action: ${ action }`
+									// });
+								}
+							});
 						} else {
-							alert("用户名与密码不匹配");
+							that.$alert('用户名与密码不匹配', '警告', {
+								confirmButtonText: '确定',
+								// callback: action => {
+									// window.location.href = "index.html";
+									// that.$message({
+									//   type: 'info',
+									//   message: `action: ${ action }`
+									// });
+								// }
+							});
 						}
 					})
 				} else {
 					console.log('error submit!!');
-					alert("用户名和密码不能为空");
+					that.$alert('用户名和密码不能为空', '警告', {
+						confirmButtonText: '确定',
+						callback: action => {
+							// this.$message({
+							//   type: 'info',
+							//   message: `action: ${ action }`
+							// });
+						}
+					});
 					return false;
 				}
 			});
 		},
 		resetForm(formName) {
 			this.$refs[formName].resetFields();
-		}
+		},
+		submitForm1(formName) {
+			var that = this;
+			that.$refs[formName].validate((valid) => {
+				if (valid) {
+					axios.post('http://106.13.237.16:10000/v1/user/register', Qs.stringify({
+						userName: that.ruleForm1.userName,
+						password: that.ruleForm1.pass
+					}), {
+						headers: {
+							"Content-Type": "application/x-www-form-urlencoded",
+						}
+					}).then(function(res) {
+						var ctx = res.data;
+						if (ctx.code == 200) {
+							localStorage.setItem('id', that.ruleForm1.userName);
+							that.$alert('注册成功', '提示', {
+								confirmButtonText: '确定',
+								callback: action => {
+									window.location.href = "index.html";
+								}
+							});
+						} else {
+							that.$alert('注册失败', '警告', {
+								confirmButtonText: '确定',
+							});
+						}
+					})
+				} else {
+					console.log('error submit!!');
+					that.$alert('用户名和密码不能为空', '警告', {
+						confirmButtonText: '确定',
+						callback: action => {
+						}
+					});
+					return false;
+				}
+			});
+		},
 	}
 })
